@@ -90,6 +90,7 @@ function play() {
     }
 
     let sentinella = false;
+    let mosseAcc = 0;
 
     function selectBomba(bombs) {
         const boxArray = document.getElementsByClassName("campo");
@@ -155,6 +156,7 @@ function play() {
     //     cell.innerHTML = num;
     //     return cell;
     // }         
+
 
 
 
