@@ -25,61 +25,71 @@ function play() {
 
     switch(levelSelected){
         case 1:
-            cellsNumber = 100;        
+            cellsNumber = 100; 
+            cellForSide = 10;       
             break;
         case 2: 
             cellsNumber = 81;
+            cellForSide = 9;
             break;
         case 3: 
             cellsNumber = 49;
+            cellForSide = 7;
             break;
         case 4: 
             cellsNumber = 36;
+            cellForSide = 6;
     }
 
-    function getRndInteger(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) ) + min;
-    }
+
+
+    // function getRndInteger(min, max) {
+    //     return Math.floor(Math.random() * (max - min + 1) ) + min;
+    // }
 
     function Bombe() {
         const arraybombe = [];
       
         while (arraybombe.length < bombsNumber) {
-            const bombRandom = getRndInteger(1,cellsNumber);
+            const bombRandom = Math.floor(Math.random() * cellsNumber + 1);
 
             if (!arraybombe.includes(bombRandom)) {
-            arraybombe.push(bombRandom);s
+            arraybombe.push(bombRandom);
             }
         }
         return arraybombe;
     }
 
+    
+
     function insertBomba(bombs) {
-        const boxArray = document.getElementsByClassName("scampo");
+        const boxArray = document.getElementsByClassName("campo");
 
         for (let i = 0; i < bombs.length; i++) {
-         const bomba = bomba[i];
+         const bomba = bombs[i];
          boxArray[bomba].classList.add("bomba");
         }
        }
 
 
-    const bombs = generateBoms();
-    console.log(bombs);
+    // const bombs = generateBoms();
+    // console.log(bombs);
 
-
+    
 
     function generateBoms(bombs) {
         // const arrayBombs = [];
         const arrayBombs = document.getElementsByClassName("campo");
         let i= 0;
 
-        while( i< bombs.length){
+        while( i < bombs.length){
             i++;
             arrayBombs[bombs[i]].classList.add("sconfitta");
-            console.log(arrayBombs);
+            // console.log(arrayBombs);
         }
     }
+
+    let sentinella = false;
 
     function selectBomba(bombs) {
         const boxArray = document.getElementsByClassName("campo");
@@ -91,10 +101,10 @@ function play() {
 
             this.classList.add("sconfitta");
                 alert("Hai perso! Nabbetto 11111111111!!!!!");
-           generateBoms(bombs);
+                generateBoms(bombs);
 
-           console.log(" Mosse =" + mosseAcc);
-           sentinella = true;
+                console.log(" Mosse =" + mosseAcc);
+                sentinella = true;
 
           } else {
 
@@ -109,8 +119,6 @@ function play() {
         }
        }
 
-
-    cellForSide = Math.sqrt(cellsNumber);
     // console.log(cellForSide);
 
     
@@ -119,36 +127,34 @@ function play() {
 
     function generatePlayground() {
         const box = document.querySelector('.container-campo');
+        const size = `calc(100% / ${cellForSide})`;
 
-        for(let i = 1; i<= cellsNumber; i++){
-            const grid = createItem(i);
-                grid.addEventListener('click', function() {
-                    this.classList.add('selected');
-            });
-            // console.log(grid);
-            box.appendChild(grid);
-
-        }   // console.log(size);  
+        for (let i = 1; i <= cellsNumber; i++) {
+            const cell = document.createElement("div");
+            cell.classList.add("campo");
+            cell.innerHTML = i;
+            cell.style.width = size;
+            cell.style.height = size;
+            box.appendChild(cell);
+           }
+              // console.log(size);  
         const bombe = Bombe();
         if (bombe.length > 0) {
             insertBomba(bombe);
             selectBomba(bombe);
         }
-    }
+        }
         
     }
 
-    function createItem(num) {
-        const cell = document.createElement('div');
-        cell.classList.add('campo');
-        const size = `calc(100% / ${cellForSide})`;
-        cell.style.width = size;
-        cell.style.height = size;
-        cell.innerHTML = num;
-        return cell;
-    }
-
-
+    // function createItem(num) {
+    //     const cell = document.createElement('div');
+    //     cell.classList.add('campo');
+    //     cell.style.width = size;
+    //     cell.style.height = size;
+    //     cell.innerHTML = num;
+    //     return cell;
+    // }         
 
 
 
