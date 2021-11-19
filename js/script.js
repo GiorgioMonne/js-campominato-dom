@@ -39,6 +39,7 @@ function play() {
         case 4: 
             cellsNumber = 36;
             cellForSide = 6;
+            break;
     }
 
 
@@ -147,6 +148,8 @@ function play() {
         }
         
     }
+
+    
 
     // function createItem(num) {
     //     const cell = document.createElement('div');
