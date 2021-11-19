@@ -23,20 +23,20 @@ main {
     background-color: #7fffd4;
 }
 
-.container-square {
+.container-campo {
     width: 500px;
     height: 500px;
     margin: 20px auto;
     border: 1px solid black;
 }
 
-.container-square::after{
+.container-campo::after{
     content: '';
     display: table;
     clear: both;
 }
 
-.square {
+.campo {
     float: left;
     /* width: calc(100% / 10);  */
     /* sarà poi data dinamicamente */
@@ -52,3 +52,11 @@ main {
 .selected {
     background-color: yellow;
 }
+
+.bomba{
+    background-color: red;
+}
+
+.sconfitta {
+    background-color: red;
+   }

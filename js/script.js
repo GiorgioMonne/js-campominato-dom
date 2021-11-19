@@ -15,7 +15,7 @@ document.getElementById('play').addEventListener('click', function(){
 });
 
 function play() {
-    document.querySelector('.container-square').innerHTML = '';
+    document.querySelector('.container-campo').innerHTML = '';
 
     const levelSelected = parseInt(document.getElementById('livello').value);
     // console.log(levelSelected);
@@ -25,78 +25,186 @@ function play() {
 
     switch(levelSelected){
         case 1:
-            cellsNumber = 100;
-            // cellForSide = 10;
-            // oppure
-            // cellForSide = 10;
-            // cellsNumber = cellForSide * cellForSide;
-            // // cellForSide = 10;          
+            cellsNumber = 100;        
             break;
         case 2: 
             cellsNumber = 81;
             break;
         case 3: 
             cellsNumber = 49;
+            break;
+        case 4: 
+            cellsNumber = 36;
     }
+
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
+    }
+
+    function Bombe() {
+        const arraybombe = [];
+      
+        while (arraybombe.length < bombsNumber) {
+            const bombRandom = getRndInteger(1,cellsNumber);
+
+            if (!arraybombe.includes(bombRandom)) {
+            arraybombe.push(bombRandom);s
+            }
+        }
+        return arraybombe;
+    }
+
+    function insertBomba(bombs) {
+        const boxArray = document.getElementsByClassName("scampo");
+
+        for (let i = 0; i < bombs.length; i++) {
+         const bomba = bomba[i];
+         boxArray[bomba].classList.add("bomba");
+        }
+       }
 
 
     const bombs = generateBoms();
     console.log(bombs);
 
-    function generateBoms() {
-        const arrayBombs = [];
 
-        while(arrayBombs.length < bombsNumber){
-            const numeroRandom = getRndInteger(1,cellsNumber);
-            if(!arrayBombs.includes(numeroRandom)) {
-                arrayBombs.push(numeroRandom);
-            }
+
+    function generateBoms(bombs) {
+        // const arrayBombs = [];
+        const arrayBombs = document.getElementsByClassName("campo");
+        let i= 0;
+
+        while( i< bombs.length){
+            i++;
+            arrayBombs[bombs[i]].classList.add("sconfitta");
+            console.log(arrayBombs);
         }
-        
-        return arrayBombs;
-
     }
 
-    function getRndInteger(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) ) + min;
-      }
+    function selectBomba(bombs) {
+        const boxArray = document.getElementsByClassName("campo");
+
+        for (let i = 0; i < boxArray.length; i++) {
+         boxArray[i].addEventListener("click", function () {
+
+          if (this.classList.contains("bomba")) {
+
+            this.classList.add("sconfitta");
+                alert("Hai perso! Nabbetto 11111111111!!!!!");
+           generateBoms(bombs);
+
+           console.log(" Mosse =" + mosseAcc);
+           sentinella = true;
+
+          } else {
+
+           if (sentinella) {
+            console.log("Hai preso la bomba");
+           }else{
+            mosseAcc++;
+            this.classList.add("selected");
+           }
+          }
+         });
+        }
+       }
 
 
     cellForSide = Math.sqrt(cellsNumber);
     // console.log(cellForSide);
 
+    
+
     generatePlayground();
 
     function generatePlayground() {
-
-        
-        const box = document.querySelector('.container-square');
+        const box = document.querySelector('.container-campo');
 
         for(let i = 1; i<= cellsNumber; i++){
             const grid = createItem(i);
-
-            grid.addEventListener('click', function() {
-                this.classList.add('selected');
+                grid.addEventListener('click', function() {
+                    this.classList.add('selected');
             });
-
             // console.log(grid);
             box.appendChild(grid);
+
+        }   // console.log(size);  
+        const bombe = Bombe();
+        if (bombe.length > 0) {
+            insertBomba(bombe);
+            selectBomba(bombe);
         }
-        // console.log(size);        
+    }
+        
     }
 
     function createItem(num) {
         const cell = document.createElement('div');
-        cell.classList.add('square');
+        cell.classList.add('campo');
         const size = `calc(100% / ${cellForSide})`;
         cell.style.width = size;
         cell.style.height = size;
-
         cell.innerHTML = num;
-
         return cell;
-
     }
+
+
+
+
+
+// document.getElementById("play").addEventListener("click", function () {
+//  play();
+// });
+
+// function play() {
+//  document.querySelector(".container-square").innerHTML = "";
+
+//  const levelSelected = parseInt(document.getElementById("level").value);
+//  console.log("levelSelected =", levelSelected);
+
+//  let cellsNumber, cellForSide;
+//  const bombeNumber = 16;
+//  let disableGame = false;
+//  let counterBlueSquare = 0;
+//  switch (levelSelected) {
+//   case 1:
+//    cellsNumber = 100;
+//    cellForSide = 10;
+//    break;
+//   case 2:
+//    cellsNumber = 81;
+//    cellForSide = 9;
+//    break;
+//   case 3:
+//    cellsNumber = 49;
+//    cellForSide = 7;
+//  }
+
+//  function generateBombe() {
+//   const arraybombe = [];
+
+//   while (arraybombe.length < bombeNumber) {
+//    const numeroRandom = Math.floor(Math.random() * cellsNumber + 1);
+//    if (!arraybombe.includes(numeroRandom)) {
+//     arraybombe.push(numeroRandom);
+//    }
+//   }
+//   return arraybombe;
+//  }
+
+
+
+    // for(let i = 1; i<= cellsNumber; i++){
+    //     for(let j=0;j < arrayBombs.length;j++){
+    //         if(arrayBombs[j] == cellsNumber[i]){
+    //             grid.addEventListener('click', function() {
+    //                 this.classList.add('bomb');
+    //         });
+    //         }
+    //     }
+
+    // }
+    
 
 
 
@@ -122,7 +230,7 @@ function play() {
 
     
  
-}
+
 // document.getElementById('play').addEventListener('click', function(){
 //     play();
 // });
